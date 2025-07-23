@@ -2,6 +2,9 @@ import Navbar from "~/components/Navbar";
 import type { Route } from "./+types/home";
 import { resumes } from "../../constants";
 import ResumeCard from "~/components/ResumeCard";
+import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router';
+import { usePuterStore } from '~/lib/puter'
 
 
 export function meta({}: Route.MetaArgs) {
@@ -12,6 +15,16 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
+  const {auth} = usePuterStore(); /* allow us to use any puter function  */
+  const navigate = useNavigate();
+
+  {/* If a user tries to access a blocked route they will be redirected to auth but after authenticated will be automatically 
+redirected to the page they were orignally blocked from */}
+
+  useEffect(() => { 
+    if(!auth.isAuthenticated) navigate('/auth?next=/'); /* If not authenticated navigated user redirected back to auth */
+  }, [auth.isAuthenticated])
+
   return <main className="min-h-screen bg-[url('/images/bg-main.svg')] bg-cover bg-center bg-no-repeat bg-fixed">
     <Navbar/>
 
