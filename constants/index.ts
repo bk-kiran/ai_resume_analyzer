@@ -182,68 +182,54 @@ export const resumes: Resume[] = [
       },
   ];
   
-  export const AIResponseFormat = `
-        interface Feedback {
-        overallScore: number; //max 100
-        ATS: {
-          score: number; //rate based on ATS suitability
-          tips: {
-            type: "good" | "improve";
-            tip: string; //give 3-4 tips
-          }[];
-        };
-        toneAndStyle: {
-          score: number; //max 100
-          tips: {
-            type: "good" | "improve";
-            tip: string; //make it a short "title" for the actual explanation
-            explanation: string; //explain in detail here
-          }[]; //give 3-4 tips
-        };
-        content: {
-          score: number; //max 100
-          tips: {
-            type: "good" | "improve";
-            tip: string; //make it a short "title" for the actual explanation
-            explanation: string; //explain in detail here
-          }[]; //give 3-4 tips
-        };
-        structure: {
-          score: number; //max 100
-          tips: {
-            type: "good" | "improve";
-            tip: string; //make it a short "title" for the actual explanation
-            explanation: string; //explain in detail here
-          }[]; //give 3-4 tips
-        };
-        skills: {
-          score: number; //max 100
-          tips: {
-            type: "good" | "improve";
-            tip: string; //make it a short "title" for the actual explanation
-            explanation: string; //explain in detail here
-          }[]; //give 3-4 tips
-        };
-      }`;
+  export const AIResponseFormat = JSON.stringify({
+    overallScore: 0,
+    ATS: {
+      score: 0,
+      tips: [{ type: "good", tip: "" }],
+    },
+    toneAndStyle: {
+      score: 0,
+      tips: [{ type: "improve", tip: "", explanation: "" }],
+    },
+    content: {
+      score: 0,
+      tips: [{ type: "good", tip: "", explanation: "" }],
+    },
+    structure: {
+      score: 0,
+      tips: [{ type: "improve", tip: "", explanation: "" }],
+    },
+    impactOrientation: {
+      score: 0,
+      quantifiedStatements: 0,
+      examples: [],
+      improvementAreas: [],
+      tips: [{ type: "good", tip: "", explanation: "" }],
+    },
+    jobSuitability: {
+      matchScore: 0,
+      matchSummary: "",
+      matchingTechnologies: [],
+      missingRequirements: [],
+      recommendation: "partial match",
+      tips: [{ type: "improve", tip: "", explanation: "" }],
+    },
+    priorityFixes: [{ item: "", explanation: "" }],
+  }, null, 2)
   
   export const prepareInstructions = ({
     jobTitle,
     jobDescription,
-    AIResponseFormat,
   }: {
     jobTitle: string;
     jobDescription: string;
-    AIResponseFormat: string;
   }) =>
-    `You are an expert in ATS (Applicant Tracking System) and resume analysis.
-    Please analyze and rate this resume and suggest how to improve it.
-    The rating can be low if the resume is bad.
-    Be thorough and detailed. Don't be afraid to point out any mistakes or areas for improvement.
-    If there is a lot to improve, don't hesitate to give low scores. This is to help the user to improve their resume.
-    If available, use the job description for the job user is applying to to give more detailed feedback.
-    If provided, take the job description into consideration.
-    The job title is: ${jobTitle}
-    The job description is: ${jobDescription}
-    Provide the feedback using the following format: ${AIResponseFormat}
-    Return the analysis as a JSON object, without any other text and without the backticks.
-    Do not include any other text or comments.`;
+      `You are an expert in ATS (Applicant Tracking Systems), resume optimization, and technical job-fit analysis.
+      Analyze the provided resume thoroughly and provide a detailed review across each category. Give honest feedback — if the resume is weak or misaligned, assign appropriately low scores.
+      Use the job title and job description below to evaluate how well the resume matches the role. Highlight missing keywords, technologies, or qualifications.
+      Prioritize impact-driven feedback: point out missing metrics, vague bullet points, or unquantified achievements.
+      The job title is: ${jobTitle}
+      The job description is: ${jobDescription}
+      Respond strictly in the following JSON format: ${AIResponseFormat}. Do not include markdown, backticks, or any surrounding text. Only return valid JSON. 
+      `;
