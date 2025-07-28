@@ -54,24 +54,26 @@ const update = () => {
         await kv.set(`resume: ${uuid}`, JSON.stringify(data)); // creates new key value set for puter.js with unique id being key and data object as the value
         setStatusText('Analyzing Resume...')
 
-        //const dummyResumeText = "I am a software engineer with experience in Python, React, and AWS.";
+        try {
+            const feedback = await ai.feedback(
+                uploadedFile.path, 
+                prepareInstructions({jobTitle, jobDescription})
+            ) // using puter AI chat (Claude Sonnet 4 LLM)
+            console.log('Feedback received:', feedback);
 
-        const feedback = await ai.feedback(
-            uploadedFile.id, 
-            prepareInstructions({jobTitle, jobDescription})
-        ) // using puter AI chat (Claude Sonnet 4 LLM)
-        console.log('Feedback received:', feedback);
-        if (!feedback) return setStatusText('Failed to Analyze Resume :/')
-    
-        const feedbackText = typeof feedback.message.content === 'string' ? feedback.message.content : feedback.message.content[0].text // if in array
-       
-        data.feedback = JSON.parse(feedbackText);
-        await kv.set(`resume: ${uuid}`, JSON.stringify(data)); // update KV set in cloud storage after feedback analysis finished.
+            if (!feedback) return setStatusText('Failed to Analyze Resume :/')
         
-        setStatusText('Analysis Complete')
-        console.log(data);
-
-
+            const feedbackText = typeof feedback.message.content === 'string' ? feedback.message.content : feedback.message.content[0].text // if in array
+        
+            data.feedback = JSON.parse(feedbackText);
+            await kv.set(`resume: ${uuid}`, JSON.stringify(data)); // update KV set in cloud storage after feedback analysis finished.
+            
+            setStatusText('Analysis Complete')
+            console.log(data);
+        } catch (err) {
+            console.error('Error during analysis:', err);
+            setStatusText('Error during analysis.');
+        }
 
     }
 

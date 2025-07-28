@@ -226,10 +226,13 @@ export const resumes: Resume[] = [
     jobDescription: string;
   }) =>
       `You are an expert in ATS (Applicant Tracking Systems), resume optimization, and technical job-fit analysis.
-      Analyze the provided resume thoroughly and provide a detailed review across each category. Give honest feedback — if the resume is weak or misaligned, assign appropriately low scores.
+      Analyze the provided resume thoroughly and provide a detailed review across each category. Give honest feedback — if the resume is weak or misaligned, assign appropriately low scores but don't be too strict at the same time.
+      Score each category on a scale from 0 to 100. 1) 0 means no relevance or very poor quality 2) 100 means an excellent, perfectly aligned resume. 3) For partial matches or some alignment, assign scores between 30 and 70. 4) Avoid assigning zero scores unless the resume completely lacks relevant content.
       Use the job title and job description below to evaluate how well the resume matches the role. Highlight missing keywords, technologies, or qualifications.
       Prioritize impact-driven feedback: point out missing metrics, vague bullet points, or unquantified achievements.
       The job title is: ${jobTitle}
       The job description is: ${jobDescription}
-      Respond strictly in the following JSON format: ${AIResponseFormat}. Do not include markdown, backticks, or any surrounding text. Only return valid JSON. 
+      Respond with **ONLY valid JSON**.Do NOT include any text outside the JSON. No apologies, explanations, or markdown. If you cannot generate the JSON, respond with an empty JSON object: {}.
       `;
+
+      
