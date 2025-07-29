@@ -68,8 +68,9 @@ const update = () => {
             data.feedback = JSON.parse(feedbackText);
             await kv.set(`resume: ${uuid}`, JSON.stringify(data)); // update KV set in cloud storage after feedback analysis finished.
             
-            setStatusText('Analysis Complete')
+            setStatusText('Analysis Complete! Redirecting...')
             console.log(data);
+            navigate(`/feedback/${uuid}`); // redirect user to feedback page with the unique id of the resume
         } catch (err) {
             console.error('Error during analysis:', err);
             setStatusText('Error during analysis.');
