@@ -1,9 +1,50 @@
 import React from 'react'
+import ScoreMeter from './ScoreMeter'
+import ScoreBadge from './ScoreBadge';
 
-const Summary = () => {
+const Category = ({ title, score }: { title: string, score: number }) => {
+    const textColor = score > 70 ? 'text-green-600'
+        : score > 49
+        ? 'text-yellow-600' : 'text-red-600';
+
+    return (
+        <div className='resume-summary'>
+            <div className='category'>
+                <div className='flex flex-row gap-2 items-center justify-center'>
+                    <p className='text-2l'>{title}</p>
+                    <ScoreBadge score={score} /> {/* Display the score badge */}
+                </div>
+
+                <p className='text-2xl'>
+                    <span className={textColor}>{score}</span>/100
+                </p>
+
+                
+            </div>
+        </div>
+    )
+}
+
+
+const Summary = ({feedback}: {feedback: Feedback}) => {
   return (
-    <div>
-      
+    <div className='bg-white rounded-2xl shadow-md w-full'>
+        <div className='flex flex-row items-center p-4 gap-8'>
+            <ScoreMeter score={feedback.overallScore}/> {/* Display the overall score using ScoreMeter component */}
+        </div>
+
+        <div className='flex flex-col gap-2'>
+            <h2 className='text-2xl font-bold'>Your Overall Resume Score</h2>
+            <p className='text-sm text-gray-500'>This score is calculated based on the factors below.</p>
+        </div>
+
+        <Category title="Tone and Style" score={feedback.toneAndStyle.score}/>
+        <Category title="Content" score={feedback.content.score}/>
+        <Category title="Structure" score={feedback.structure.score}/>
+        <Category title="impactOrientation" score={feedback.impactOrientation.score}/>
+        <Category title="jobSuitability" score={feedback.jobSuitability.matchScore}/>
+
+
     </div>
   )
 }

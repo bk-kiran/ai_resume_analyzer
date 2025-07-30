@@ -48,12 +48,29 @@ interface Job {
         explanation: string;
       }[];
     };
-    skills: {
-      score: number;
-      tips: {
-        type: "good" | "improve";
-        tip: string;
-        explanation: string;
-      }[];
-    };
-  }
+    impactOrientation: {
+      score: 0,
+      quantifiedStatements: 0,
+      examples: [],
+      improvementAreas: [],
+      tips: [{ type: "good", tip: "", explanation: "" }],
+    },
+    jobSuitability: {
+      matchScore: 0,
+      matchSummary: "",
+      matchingTechnologies: [],
+      missingRequirements: [],
+      recommendation: "partial match",
+      tips: [{ type: "improve", tip: "", explanation: "" }],
+    },
+    priorityFixes: [{ item: "", explanation: "" }],
+    strengths: [
+      // AI will fill this with key strong points in the resume
+      "",
+    ],
+    weaknesses: [
+      // AI will fill this with areas needing improvement
+      "",
+    ],
+  };
+  
