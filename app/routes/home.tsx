@@ -9,8 +9,8 @@ import { usePuterStore } from '~/lib/puter'
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "AI Resume Analyzer" },
-    { name: "description", content: "Tailor your Resume!" },
+    { title: "ResuMeister" },
+    { name: "description", content: "Tailor your Resume to any job description!" },
   ];
 }
 
@@ -25,25 +25,25 @@ redirected to the page they were orignally blocked from */}
     if(!auth.isAuthenticated) navigate('/auth?next=/'); /* If not authenticated navigated user redirected back to auth */
   }, [auth.isAuthenticated])
 
-  return <main className="min-h-screen bg-[url('/images/bg-main.svg')] bg-cover bg-center bg-no-repeat bg-fixed">
-    <Navbar/>
+  return <main className="min-h-screen bg-gradient-to-b from-[#fce4ec] via-[#e8ebf9] to-[#f9fafb]">
+  <div className="bg-[url('/images/bg-main.svg')] bg-no-repeat bg-top bg-cover">
+    <Navbar />
 
-    <section className= "main-section">
-      <div className="page-heading py-16">
-        <h1>AI Resume Analyzer</h1>
-        <h2>Tailor your Resume!</h2>
+    <section className="flex flex-col items-center justify-center px-4 py-16">
+      <div className="text-center mb-12">
+        <h1 className="text-4xl font-bold text-gray-900">ResuMeister</h1>
+        <h2 className="text-xl mt-2 text-gray-700">Tailor your Resume to any job description!</h2>
       </div>
-    
 
-      {resumes.length > 0 && ( // checking if resumes.length > 0 then show the example resume cards
-        <div className="resumes-section">
-          {resumes.map((resume) => (  // Gathering Resumes from the resumes in the constant folder
-            <ResumeCard key={resume.id} resume={resume}/>
+      {resumes.length > 0 && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {resumes.map((resume) => (
+            <ResumeCard key={resume.id} resume={resume} />
           ))}
         </div>
       )}
-    
-  </section>
-    
-  </main>
+    </section>
+  </div>
+</main>
+
 }

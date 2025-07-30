@@ -30,7 +30,7 @@ const Score = ({
   return (
     <Accordion defaultOpen="ats">
         <AccordionItem id="ats">
-            <AccordionHeader itemId="ats" icon={icon} className={cn("flex items-center justify-between bg-gradient-to-b from-yellow-100 to-white px-6 py-4 rounded-t-lg shadow-sm",
+            <AccordionHeader itemId="ats" className={cn("flex items-center justify-between bg-gradient-to-b from-yellow-100 to-white px-6 py-4 rounded-t-lg shadow-sm",
                 score > 69
                     ? "from-green-100"
                     : score > 49
@@ -38,7 +38,10 @@ const Score = ({
                     : "from-red-100"
             )}
             >
-                <p className="text-2xl font-bold text-black">ATS Score - {score}/100</p>
+                <p className="text-2xl font-bold text-black flex items-center gap-2">
+                    {icon}
+                    ATS Score - {score}/100</p>
+                
             </AccordionHeader>
 
             <AccordionContent itemId="ats" className="bg-white shadow-inner">
