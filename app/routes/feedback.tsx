@@ -73,7 +73,7 @@ const feedback = () => {
             </section>
             
             <section className='feedback-section'>
-                <h2 className='text-4xl text-black font-bold'>Resume Review</h2>
+                {/*<h2 className='text-4xl text-black font-bold'></h2>*/}
 
                 {feedback ? ( // If feedback exists, display it
                     <div className='flex flex-col gap-8 animate-in fade-in duration-1000'>
