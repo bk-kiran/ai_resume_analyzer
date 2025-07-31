@@ -10,6 +10,9 @@ const Navbar = () => {
         <Link to="/upload" className='primary-button w-fit'>
             Upload Resume
         </Link>
+        <Link to="/auth" className='primary-button w-fit'>
+            Log Out
+        </Link>
     </nav>
   )
 }
