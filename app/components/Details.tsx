@@ -60,7 +60,7 @@ const CategoryHeader = ({
 const CategoryContent = ({
                            tips,
                          }: {
-  tips: { type: "good" | "improve"; tip: string; explanation: string }[];
+  tips: { type: "good" | "improve"; tip: string; explanation?: string }[];
 }) => {
   return (
       <div className="flex flex-col gap-4 items-center w-full">
@@ -102,12 +102,12 @@ const CategoryContent2 = ({
               <div
                   key={index + item.item}
                   className={
-                      "flex flex-col gap-2 rounded-2xl p-4 bg-yellow-50 border border-yellow-200 text-yellow-700"
+                      "flex flex-col gap-2 rounded-2xl p-4 bg-red-50 border border-red-200 text-red-700"
                   }
               >
                 <div className="flex flex-row gap-2 items-center">
                     <div className="size-5">
-                        <FaCircleExclamation className="text-yellow-600"/>
+                        <FaCircleExclamation className="text-red-600"/>
                     </div>
                   <p className="text-sm font-semibold">{item.item}</p>
                 </div>
@@ -144,13 +144,13 @@ const BulletList = ({
     type === "good" ? (
       <FaCircleCheck className="text-green-600" />
     ) : (
-      <FaCircleExclamation className="text-yellow-600" />
+      <FaCircleExclamation className="text-red-600" />
     );
 
   const tileColor =
     type === "good"
       ? "bg-green-50 border border-green-200 text-green-700"
-      : "bg-yellow-50 border border-yellow-200 text-yellow-700";
+      : "bg-red-50 border border-red-200 text-red-700";
 
   return (
     <div className="flex flex-col gap-4 items-center w-full">
@@ -215,6 +215,22 @@ const Details = ({ feedback }: { feedback: Feedback }) => {
   return (
     <div className="flex flex-col gap-4 w-full">
         <Accordion> {/* Accordion to display different categories of feedback */}
+
+            <AccordionItem id="tone-style"> {/* Accordion item for ATS */}
+                <AccordionHeader itemId="ats">
+                     <CategoryHeader title="ATS Score" categoryScore={feedback.ATS.score}/>
+                </AccordionHeader>
+                <AccordionContent itemId="ats">
+                    <div className="bg-gray-50 w-full rounded-lg px-5 py-4 gap-4 mb-4">
+                        <p className="text-sm text-gray-500 mb-4">This score represents how well your resume is likely to perform in Applicant Tracking Systems used by recruiters.</p>
+                    </div>
+                    <CategoryContent tips={feedback.ATS.tips} />
+                    <div className="bg-gray-50 w-full rounded-lg px-5 py-4 gap-4 mb-4">
+                        <p className="text-sm text-gray-500 mb-4">Keep refining your resume using the suggestions below to improve your chances of getting past ATS filters.</p>
+                    </div>
+                </AccordionContent>
+            </AccordionItem>
+
             <AccordionItem id="tone-style"> {/* Accordion item for Tone & Style */}
                 <AccordionHeader itemId="tone-style">
                      <CategoryHeader title="Tone & Style" categoryScore={feedback.toneAndStyle.score}/>
@@ -298,7 +314,7 @@ const Details = ({ feedback }: { feedback: Feedback }) => {
                 <AccordionHeader itemId="weakness">
                     <div className="flex flex-row items-center gap-2">
                         <BulletHeader title="Overall Resume Weaknesses"/>
-                        <FaCircleExclamation className="text-yellow-600 size-6" />
+                        <FaCircleExclamation className="text-red-600 size-6" />
                     </div>
                 </AccordionHeader>
                 <AccordionContent itemId="weakness">
@@ -311,7 +327,7 @@ const Details = ({ feedback }: { feedback: Feedback }) => {
                 <AccordionHeader itemId="missingRequirements">
                     <div className="flex flex-row items-center gap-2">
                         <BulletHeader title="Missing Requirements"/>
-                        <FaCircleExclamation className="text-yellow-600 size-6" />
+                        <FaCircleExclamation className="text-red-600 size-6" />
                     </div>
                 </AccordionHeader>
                 <AccordionContent itemId="missingRequirements">

@@ -25,11 +25,10 @@ redirected to the page they were orignally blocked from */}
     if(!auth.isAuthenticated) navigate('/auth?next=/'); /* If not authenticated navigated user redirected back to auth */
   }, [auth.isAuthenticated])
 
-  return <main className="min-h-screen bg-gradient-to-b from-[#fce4ec] via-[#e8ebf9] to-[#f9fafb]">
-  <div className="bg-[url('/images/bg-main.svg')] bg-no-repeat bg-top bg-cover">
-    <Navbar />
+  return <main className="bg-[url('/images/bg-main.svg')] bg-cover">
+      <Navbar />
 
-    <section className="flex flex-col items-center justify-center px-4 py-16">
+    <section className="flex flex-col items-center justify-center px-4 py-12">
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-gray-900">ResuMeister</h1>
         <h2 className="text-xl mt-2 text-gray-700">Tailor your Resume to any job description!</h2>
@@ -43,7 +42,6 @@ redirected to the page they were orignally blocked from */}
         </div>
       )}
     </section>
-  </div>
 </main>
 
 }
